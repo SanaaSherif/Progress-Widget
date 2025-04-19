@@ -84,7 +84,21 @@
       white-space: nowrap;
       font-size: 1.2em;
       font-weight: bold;
+      transition: color 0.3s ease;
     }
+
+    @media (prefers-color-scheme: light) {
+      .text {
+        color: #333; /* Darker color for light mode */
+      }
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .text {
+        color: #f1f1f1; /* Lighter color for dark mode */
+      }
+    }
+
   </style>
 </head>
 <body>
