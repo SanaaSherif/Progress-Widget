@@ -138,17 +138,31 @@
   
   
   
-    function setTextColorBasedOnNotionTheme() {
-      const textEl = document.getElementById("days-left");
-      const bgColor = getComputedStyle(document.body).backgroundColor;
+function setTextColorBasedOnNotionTheme() {
+  const textEl = document.getElementById("days-left");
 
-      // Convert to RGB and determine brightness
-      const rgb = bgColor.match(/\d+/g).map(Number);
-      const brightness = (rgb[0] * 299 + rgb[1] * 587 + rgb[2] * 114) / 1000;
+  // Create a temporary test element
+  const tempDiv = document.createElement("div");
+  tempDiv.style.position = "fixed";
+  tempDiv.style.top = "0";
+  tempDiv.style.left = "0";
+  tempDiv.style.width = "1px";
+  tempDiv.style.height = "1px";
+  tempDiv.style.zIndex = "-1"; // Push behind everything
+  document.body.appendChild(tempDiv);
 
-      // Light background → dark text, dark background → light text
-      textEl.style.color = brightness > 128 ? '#222' : '#f1f1f1';
-    }
+  const bgColor = getComputedStyle(tempDiv).backgroundColor;
+  document.body.removeChild(tempDiv);
+
+  // Parse and calculate brightness
+  const match = bgColor.match(/\d+/g);
+  if (match) {
+    const rgb = match.map(Number);
+    const brightness = (rgb[0] * 299 + rgb[1] * 587 + rgb[2] * 114) / 1000;
+    textEl.style.color = brightness > 128 ? '#222' : '#f1f1f1';
+  }
+}
+
 
     setTextColorBasedOnNotionTheme();
 
