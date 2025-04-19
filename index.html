@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Countdown Widget</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: sans-serif;
+      background: transparent;
+    }
+
+    .container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      max-width: 500px;
+    }
+
+    .bar-wrapper {
+      flex-grow: 1;
+      height: 30px;
+      border: 3px solid #7f8c8d;
+      border-radius: 25px;
+      overflow: hidden;
+      background-color: #dcdcdc; /* Lighter grey for the empty part */
+      box-shadow: inset 0 -1px 1px rgba(255, 255, 255, 0.3);
+    }
+
+    .progress {
+      height: 100%;
+      background-color: #4A3228; /* Updated to the new color */
+      box-shadow: inset 0 2px 9px rgba(255, 255, 255, 0.3),
+                  inset 0 -2px 6px rgba(0, 0, 0, 0.4);
+      width: 0%;
+      border-top-left-radius: 20px;
+      border-bottom-left-radius: 20px;
+      border-top-right-radius: 8px;
+      border-bottom-right-radius: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Adding animated stripes */
+    .progress::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: linear-gradient(
+        -45deg,
+        rgba(255, 255, 255, 0.2) 25%,
+        transparent 25%,
+        transparent 50%,
+        rgba(255, 255, 255, 0.2) 50%,
+        rgba(255, 255, 255, 0.2) 75%,
+        transparent 75%,
+        transparent
+      );
+      background-size: 50px 50px;
+      animation: move 2s linear infinite;
+      z-index: 1;
+      border-top-left-radius: 20px;
+      border-bottom-left-radius: 20px;
+      border-top-right-radius: 8px;
+      border-bottom-right-radius: 8px;
+    }
+
+    @keyframes move {
+      0% {
+        background-position: 0 0;
+      }
+      100% {
+        background-position: 50px 50px;
+      }
+    }
+
+    .text {
+      white-space: nowrap;
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="bar-wrapper">
+      <div class="progress" id="progress-bar"></div>
+    </div>
+    <div class="text" id="days-left"></div>
+  </div>
+
+  <script>
+    // Set your dates here:
+    const startDate = new Date("2025-04-19");
+    const endDate = new Date("2027-04-19"); // 100 days later
+
+    const totalTime = Math.floor((endDate - startDate) / (1000 * 60 * 60 * 24));
+    const now = new Date();
+    const daysPassed = Math.floor((now - startDate) / (1000 * 60 * 60 * 24));
+    const daysLeft = Math.max(totalTime - daysPassed, 0);
+    const progressPercent = Math.min((daysPassed / totalTime) * 100, 100);
+
+    // Animate the width of the progress bar
+    const progressBar = document.getElementById("progress-bar");
+    progressBar.style.width = '0%'; // Set initial width to 0
+
+    setTimeout(() => {
+      progressBar.style.width = progressPercent + "%"; // Animate to the calculated width
+    }, 100); // Delay to trigger animation smoothly
+
+    document.getElementById("days-left").innerText = `${daysLeft} day${daysLeft === 1 ? '' : 's'} left`;
+  </script>
+</body>
+</html>
