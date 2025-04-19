@@ -5,15 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Countdown Widget</title>
   <style>
-.text {
-  white-space: nowrap;
-  font-size: 1.2em;
-  font-weight: bold;
-  color: black; /* default for light mode */
-}
-
-/* Dark mode support */
-
 
     body {
       margin: 0;
@@ -91,16 +82,14 @@
     }
 
     .text {
+      fill: #4A3228;
       white-space: nowrap;
       font-size: 1.2em;
       font-weight: bold;
     }
-
     @media (prefers-color-scheme: dark) {
-  .text {
-    color: white;
-  }
-}
+            circle { fill: rgb(231, 230, 230); }
+        }
   </style>
 </head>
 <body>
