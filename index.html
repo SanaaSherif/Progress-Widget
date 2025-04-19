@@ -129,6 +129,35 @@
     }, 100); // Delay to trigger animation smoothly
 
     document.getElementById("days-left").innerText = `${daysLeft} day${daysLeft === 1 ? '' : 's'} left`;
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    function setTextColorBasedOnNotionTheme() {
+      const textEl = document.getElementById("days-left");
+      const bgColor = getComputedStyle(document.body).backgroundColor;
+
+      // Convert to RGB and determine brightness
+      const rgb = bgColor.match(/\d+/g).map(Number);
+      const brightness = (rgb[0] * 299 + rgb[1] * 587 + rgb[2] * 114) / 1000;
+
+      // Light background → dark text, dark background → light text
+      textEl.style.color = brightness > 128 ? '#222' : '#f1f1f1';
+    }
+
+    setTextColorBasedOnNotionTheme();
+
+    // Optional: Re-check every second in case Notion theme changes while open
+    setInterval(setTextColorBasedOnNotionTheme, 1000);
+
+  
+  
+  
   </script>
 </body>
 </html>
